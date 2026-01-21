@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoodFlix - Your Mood, Your Movie</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Floating Particles -->
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <nav class="navbar">
+            <div class="logo">
+                <span class="logo-icon">🎬</span>
+                <span class="logo-text">MoodFlix</span>
+            </div>
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#moods">Find Movies</a>
+                <a href="#about">About</a>
+            </div>
+        </nav>
+
+        <div class="hero-content">
+            <h1 class="hero-title">Discover Movies That Match Your Mood</h1>
+            <p class="hero-subtitle">Let your emotions guide your next cinematic adventure</p>
+            <button class="cta-button" onclick="scrollToMoods()">Explore Now</button>
+        </div>
+
+        <div class="hero-overlay"></div>
+    </div>
+
+    <!-- Mood Selection Section -->
+    <section id="moods" class="mood-section">
+        <h2 class="section-title">How Are You Feeling Today?</h2>
+        <p class="section-subtitle">Select your mood and we'll find the perfect movies for you</p>
+        
+        <div class="mood-container">
+            <div class="mood-card" data-mood="happy">
+                <div class="mood-emoji">😊</div>
+                <h3>Happy</h3>
+                <p>Comedies & Feel-Good</p>
+            </div>
+            <div class="mood-card" data-mood="sad">
+                <div class="mood-emoji">😢</div>
+                <h3>Sad</h3>
+                <p>Drama & Emotional</p>
+            </div>
+            <div class="mood-card" data-mood="excited">
+                <div class="mood-emoji">🤩</div>
+                <h3>Excited</h3>
+                <p>Action & Thriller</p>
+            </div>
+            <div class="mood-card" data-mood="relaxed">
+                <div class="mood-emoji">😌</div>
+                <h3>Relaxed</h3>
+                <p>Animation & Fantasy</p>
+            </div>
+            <div class="mood-card" data-mood="romantic">
+                <div class="mood-emoji">❤️</div>
+                <h3>Romantic</h3>
+                <p>Romance & Love Stories</p>
+            </div>
+            <div class="mood-card" data-mood="adventurous">
+                <div class="mood-emoji">🚀</div>
+                <h3>Adventurous</h3>
+                <p>Adventure & Sci-Fi</p>
+            </div>
+            <div class="mood-card" data-mood="scared">
+                <div class="mood-emoji">😱</div>
+                <h3>Thrill-Seeking</h3>
+                <p>Horror & Mystery</p>
+            </div>
+            <div class="mood-card" data-mood="thoughtful">
+                <div class="mood-emoji">🤔</div>
+                <h3>Thoughtful</h3>
+                <p>Documentary & History</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Movies Display Section -->
+    <section class="movies-section" id="moviesSection" style="display: none;">
+        <div class="movies-header">
+            <h2 class="section-title">Recommended For You</h2>
+            <button class="back-button" onclick="resetSelection()">← Change Mood</button>
+        </div>
+        
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Finding perfect movies for you...</p>
+        </div>
+
+        <div class="movies-grid" id="moviesGrid"></div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Made with ❤️ for movie lovers | Powered by TMDb API</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
