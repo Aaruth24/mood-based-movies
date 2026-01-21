@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #fff;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background: #764ba2;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 20px;
+            background: #2a2a2a;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .success { color: #43e97b; }
+        .error { color: #f5576c; }
+    </style>
+</head>
+<body>
+    <h1>TMDb API Connection Test</h1>
+    <p>Click the button to test if the API is accessible:</p>
+    
+    <button onclick="testDirectAPI()">Test Direct API</button>
+    <button onclick="testWithProxy()">Test with CORS Proxy</button>
+    
+    <div id="result"></div>
+
+    <script>
+        const API_KEY = '897dbd3c30746d685b342e2d62d63d26';
+        const resultDiv = document.getElementById('result');
+
+        async function testDirectAPI() {
+            resultDiv.innerHTML = '<p>Testing direct API connection...</p>';
+            
+            try {
+                const url = `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&page=1`;
+                console.log('Fetching:', url);
+                
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                if (data.results && data.results.length > 0) {
+                    resultDiv.innerHTML = `
+                        <p class="success">✅ SUCCESS! API is working!</p>
+                        <p>Found ${data.results.length} movies</p>
+                        <p>First movie: ${data.results[0].title}</p>
+                        <p><strong>Response:</strong></p>
+                        <pre>${JSON.stringify(data, null, 2).substring(0, 500)}...</pre>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `<p class="error">❌ API returned empty results</p>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <p class="error">❌ ERROR: ${error.message}</p>
+                    <p>This likely means:</p>
+                    <ul>
+                        <li>Firewall is blocking the request</li>
+                        <li>Internet connection issue</li>
+                        <li>CORS restrictions</li>
+                    </ul>
+                    <p>Try the CORS Proxy button instead.</p>
+                `;
+                console.error('Error:', error);
+            }
+        }
+
+        async function testWithProxy() {
+            resultDiv.innerHTML = '<p>Testing with CORS proxy...</p>';
+            
+            try {
+                const url = `https://api.allorigins.win/get?url=${encodeURIComponent(`https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&page=1`)}`;
+                console.log('Fetching via proxy:', url);
+                
+                const response = await fetch(url);
+                const proxyData = await response.json();
+                const data = JSON.parse(proxyData.contents);
+                
+                if (data.results && data.results.length > 0) {
+                    resultDiv.innerHTML = `
+                        <p class="success">✅ SUCCESS with proxy! API is working!</p>
+                        <p>Found ${data.results.length} movies</p>
+                        <p>First movie: ${data.results[0].title}</p>
+                        <p><strong>This means your firewall is blocking direct API access.</strong></p>
+                        <p>The main app will be updated to use the proxy automatically.</p>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `<p class="error">❌ Proxy returned empty results</p>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <p class="error">❌ PROXY ERROR: ${error.message}</p>
+                `;
+                console.error('Proxy error:', error);
+            }
+        }
+    </script>
+</body>
+</html>
